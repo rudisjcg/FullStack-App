@@ -1,9 +1,12 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
 
 export enum Category {
     ADMIN = 'admin',
     USER = 'user'
 }
+
+export type UserDocument = HydratedDocument<User>;
 
 @Schema({
     timestamps: true

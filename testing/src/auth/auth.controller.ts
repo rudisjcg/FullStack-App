@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { User } from 'src/users/schemas/user.schema';
 import { AuthGuard } from './auth.guard';
 
-@Controller('auth')
+@Controller('auth') 
 export class AuthController {
     constructor(private authService: AuthService){}
 
