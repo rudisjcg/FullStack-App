@@ -6,11 +6,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
-    constructor(private userService: UserService) {}
+    constructor(private UserService: UserService) {}
 
     @Get()
     async getAllUsers(): Promise<User[]> {
-        return this.userService.findAll();
+        return this.UserService.findAll();
     }
 
     @Post()
@@ -18,7 +18,7 @@ export class UsersController {
         @Body()
         user: CreateUserDto,
     ): Promise<User> {
-        return this.userService.create(user);
+        return this.UserService.create(user);
     }
 
     @Get(':id')
@@ -26,7 +26,7 @@ export class UsersController {
         @Param('id')
         id: string,
     ): Promise<User> {
-        return this.userService.findById(id);
+        return this.UserService.findById(id);
     }
 
     @Put(':id')
@@ -36,7 +36,7 @@ export class UsersController {
         @Body()
         user: UpdateUserDto,
     ): Promise<User> {
-        return this.userService.updateById(id, user);
+        return this.UserService.updateById(id, user);
     }
 
     @Delete(':id')
@@ -44,6 +44,6 @@ export class UsersController {
         @Param('id')
         id: string, 
     ): Promise<User> {
-        return this.userService.delete(id);
+        return this.UserService.delete(id);
     }
 }

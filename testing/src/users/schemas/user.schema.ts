@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Document, HydratedDocument } from "mongoose";
 
 export enum Category {
     ADMIN = 'admin',
@@ -12,11 +12,11 @@ export type UserDocument = HydratedDocument<User>;
     timestamps: true
 })
 
-export class User {
-    @Prop({ required: true })
+export class User extends Document {
+    @Prop()
     name: string;
 
-    @Prop({ required: false })
+    @Prop({unique: [true, 'Email already exists']})
     email: string;
 
     @Prop({ required: true })
