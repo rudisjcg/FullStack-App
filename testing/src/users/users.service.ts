@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import * as mongoose from 'mongoose';
+import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User, UserDocument } from './schemas/user.schema';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserService {
     constructor (
         @InjectModel(User.name) 
-        private userModel: mongoose.Model<User>
+        private userModel: Model<UserDocument>,
     ) {}
 
 
@@ -16,10 +18,16 @@ export class UserService {
         return users;
     }
 
-    async create(user: User): Promise<User> {
+    async create(user: CreateUserDto): Promise<User> {
+        const existingUser = await this.userModel.findOne({ email: user.email });
+      
+        if (existingUser) {
+          throw new HttpException('Email already exists', HttpStatus.BAD_REQUEST);
+        }
+      
         const createdUser = new this.userModel(user);
         return createdUser.save();
-    }
+      }
 
     async findById(id: string): Promise<User> {
         const user = await this.userModel.findById(id);
@@ -31,11 +39,11 @@ export class UserService {
 
     }
 
-    async findOne(email: string): Promise<User> {
-        return await this.userModel.findOne({ email });
+    async findOne(email: string): Promise<User | undefined> {
+        return await this.userModel.findOne({ email }).exec();
     }
 
-    async updateById(id: string, user: User): Promise<User> {
+    async updateById(id: string, user: UpdateUserDto): Promise<User> {
        return await this.userModel.findByIdAndUpdate(id, user, { new: true });
     }
 
