@@ -12,7 +12,7 @@ export type UserDocument = HydratedDocument<User>;
     timestamps: true
 })
 
-export class User extends Document {
+export class User extends Document{
     @Prop()
     name: string;
 
