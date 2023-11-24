@@ -9,22 +9,16 @@ export class AuthController {
     constructor(private authService: AuthService){}
 
     @HttpCode(HttpStatus.OK) 
-    @Get('/login')
+    @Get('login')
     async signIn(@Body() loginDto: LoginDto): Promise<{ token: string}> {
         return await this.authService.login(loginDto);
     }
-
-    @Post('/signup')
+    @Post('signup')
     signup(@Body() signUpDto: SignUpDto): Promise<{ token: string}> {
         return this.authService.signUp(signUpDto);
     }
+
     
 
 
-
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfile(@Request() req){
-        return req.user;
-    }
 }
