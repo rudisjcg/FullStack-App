@@ -3,11 +3,6 @@ import { ExpressCheckoutElement } from '@stripe/react-stripe-js';
 import { useStripe } from '@stripe/react-stripe-js';
 import { useElements } from '@stripe/react-stripe-js';
 import { StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js';
-import axios from 'axios';
-
-
-
-
 
 export default function MainPage() {
 
@@ -50,7 +45,7 @@ export default function MainPage() {
     });
     console.log(paymentRequest)
     pr.on('paymentmethod', async (e) => {
-      const response = await fetch('http://localhost:3500/create-intent', {
+      const response = await fetch("https://b1e9-168-228-235-209.ngrok-free.app/api/create-intent", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,12 +53,11 @@ export default function MainPage() {
         body: JSON.stringify({
           paymentMethodType: 'card',
           currency: 'usd',
-        })
+        }),
       });
 
-      console.log(await response.json());
-
       const { error: backendError, clientSecret } = await response.json();
+
 
       if (backendError) {
         addMessage(backendError.message);
@@ -102,7 +96,7 @@ export default function MainPage() {
       
       const userData = {name, email, text, id }
   
-      const response = await fetch("http://localhost:3000/webhook", {
+      const response = await fetch("https://b1e9-168-228-235-209.ngrok-free.app/webhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({userData })
@@ -167,7 +161,7 @@ export default function MainPage() {
       e.preventDefault();
   
       console.log(data)
-      const response = await fetch("http://localhost:3500/webhook", {
+      const response = await fetch("https://b1e9-168-228-235-209.ngrok-free.app/webhook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
