@@ -11,7 +11,6 @@ export default function MainPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [text, setText] = useState("");
-    const [id, setId] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const stripe = useStripe();
     const elements = useElements();
@@ -94,7 +93,7 @@ export default function MainPage() {
       e.preventDefault();
   
       
-      const userData = {name, email, text, id }
+      const userData = {name, email, text, password }
   
       const response = await fetch("https://b1e9-168-228-235-209.ngrok-free.app/webhook", {
         method: "POST",
@@ -106,6 +105,7 @@ export default function MainPage() {
     }
 
     const onConfirm = async (event: React.FormEvent<HTMLFormElement>) => {
+      console.log(event)
       if (!stripe || !elements) {
         // Stripe.js or Elements haven't loaded yet.
         // Make sure to disable form submission until they have loaded.
@@ -144,17 +144,10 @@ export default function MainPage() {
         // Your customer is redirected to your `return_url`.
       }
     };
+
+    console.log(errorMessage)
   
   
-    function generateRandomString() {
-      let result = '';
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      const charactersLength = characters.length;
-      for (let i = 0; i < 10; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      setId(result);
-    }
   
   
     async function webHook (e: React.FormEvent<HTMLFormElement>, data: any) {
