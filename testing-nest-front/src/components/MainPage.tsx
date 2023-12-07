@@ -17,10 +17,14 @@ export default function MainPage() {
     const [paymentRequest, setPaymentRequest] = useState({} || null);
     const [messages, addMessage] = useState("");
 
+    
+
   useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
+
+    
 
     const pr = stripe.paymentRequest({
       country: 'US',
@@ -44,7 +48,7 @@ export default function MainPage() {
     });
     console.log(paymentRequest)
     pr.on('paymentmethod', async (e) => {
-      const response = await fetch("https://b1e9-168-228-235-209.ngrok-free.app/api/create-intent", {
+      const response = await fetch("https://6d52-168-228-235-209.ngrok-free.app/api/create-intent", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,6 +92,7 @@ export default function MainPage() {
 
   }, [stripe, elements, addMessage]);
   console.log(messages)
+ 
 
     const updatingUser = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
