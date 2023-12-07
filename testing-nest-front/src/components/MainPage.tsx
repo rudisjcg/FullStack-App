@@ -92,14 +92,6 @@ export default function MainPage() {
 
   }, [stripe, elements, addMessage]);
   console.log(messages)
-
-  const expressCheckoutOptions = {
-    buttonType: {
-      applePay: 'buy',
-      googlePay: 'buy',
-      paypal: 'buynow'
-    }
-  }
  
 
     const updatingUser = async (e: React.FormEvent<HTMLFormElement>) => {
